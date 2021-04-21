@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const rolesService = require('../controllers/rolesService') //Cambiar
+const pruebaService = require('../controllers/pruebaService')
 const jwt = require('jsonwebtoken')
 const configuration = require('../ConfigServer')
 
+//Zona de Middleware
 router.use('/', (req, res, next) => {
     //Paso 1.
     const token =req.headers['authorization']
@@ -21,8 +22,18 @@ router.use('/', (req, res, next) => {
     })
 })
 
-router.get('/getAllRoles',rolesService.getAllRoles);
-router.delete('/deleteRol/:idRol', rolesService.deleteRol);
+//Zona de Routing
+router.get('/pruebanameValidate/:username',pruebaService.pruebanameValidate);
+router.post('/pruebaAdd',pruebaService.addPrueba)  //Servicio exclusivo para usuarios validados
+router.get('/getAllPlanta',pruebaService.getAllPlanta);
+router.delete('/deletePlanta/:idprueba', pruebaService.deletePlanta);
+
 
 module.exports = router;
+
+/*
+    URL params
+    Query Params
+    Body
+ */
 

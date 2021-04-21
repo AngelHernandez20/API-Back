@@ -24,7 +24,7 @@ const usernameValidate = (req, res) => {
 const signup = (req, res) => {
     console.log('Signup => in')
 
-    if (req.user) {
+
         const user = {
             idRol : req.body.idRol,
             nombre : req.body.nombre,
@@ -44,14 +44,8 @@ const signup = (req, res) => {
                 errorMessage: err
             })
         })
-    }
-    else {
-        res.send({
-            status:false,
-            message: 'Este servicio requiere el uso de un Token válido, contactar al administrador',
-            error: '100. Falta token'
-        })
-    }
+
+
 
 }
 
@@ -80,12 +74,77 @@ const login = (req,res) => {
             })
         }
     })
+};
+
+const getAllUsuario = (req,res) => {
+    userDAO.getAllUser((data) =>{
+        try {
+            if (!data) throw new Err("Catálogo vacío")
+
+            res.send({
+                status: true,
+                data: data
+            })
+        }
+        catch(Err) {
+            res.send({
+                status: false,
+                message: 'Catálogo vacío'
+            })
+        }
+    })
+};
+
+const deleteUsuario = (req, res) => {
+    userDAO.deleteUsuario(req.params.idUser, data => {
+        try {
+            if (!data) throw new Err("Hubo un error en el proceso")
+            if (data.affectedRows === 0) throw new Err(`Falló la eliminación del idRol: ${req.params.idUser}`)
+            res.send({
+                status: true,
+                message: `Eliminación de idRol: ${req.params.idUser} fue exitosa`
+            })
+        }
+        catch (Err) {
+            res.send({
+                status: false,
+                message: 'Error :('
+            })
+        }
+    })
+};
+
+const updateUsuario = (req, res) =>{
+
+    const user = {
+        nombre : req.body.nombre,
+        apellidoPaterno : req.body.apellidoPaterno,
+        username : req.body.username,
+
+    }
+    const id= req.body.idUser
+
+    userDAO.updateUsuario(user, id, (data) => {
+        res.send({
+            status: true,
+            message: 'usuario actualizado exitosamente'
+        })
+    }, err => {
+        res.send({
+            status:false,
+            message: 'Ha ocurrido un error al actualizar el usuario',
+            errorMessage: err
+        })
+    })
 }
 
 module.exports = {
     usernameValidate,
     signup,
-    login
+    login,
+    getAllUsuario,
+    deleteUsuario,
+    updateUsuario
 }
 
 

@@ -2,7 +2,7 @@ const bd = require('../configMysql')
 
 module.exports = {
     findByUsername : (username, callback) => {
-        let sql = 'SELECT * FROM usuarios WHERE username=?'
+        let sql = 'SELECT * FROM prueba WHERE nombre=?'
         bd.query(sql,username, (err, data) => {
             if (err) throw err
 
@@ -15,8 +15,8 @@ module.exports = {
     getAllUsers : (callback) => {
 
     },
-    insertUser : (user, okCallback, failCallback) => {
-        let sql = 'INSERT INTO usuarios SET ?'
+    insertPrueba : (user, okCallback, failCallback) => {
+        let sql = 'INSERT INTO prueba SET ?'
         bd.query(sql, user, (err, data) => {
             if (err)
                 return failCallback(err)
@@ -25,8 +25,8 @@ module.exports = {
         })
     },
 
-    getAllUser: (callback) => {
-        let sql = 'SELECT * FROM usuarios'
+    getAllPlanta: (callback) => {
+        let sql = 'SELECT * FROM prueba'
         bd.query(sql,(err, data) => {
             if (err) throw err
 
@@ -37,9 +37,9 @@ module.exports = {
         })
     },
 
-    deleteUsuario: (idUser, callback) => {
-        let sql = 'DELETE FROM usuarios WHERE idUser = ?'
-        bd.query(sql,idUser, (err, data) => {
+    deletePlanta: (idprueba, callback) => {
+        let sql = 'DELETE FROM prueba WHERE idprueba = ?'
+        bd.query(sql,idprueba, (err, data) => {
             console.log("err =>",err)
             console.log("data =>",data)
             try {
@@ -50,17 +50,6 @@ module.exports = {
                 return callback(null)
             }
         })
-    },
+    }
 
-    updateUsuario : (user, idUser, callback) => {
-        let sql = 'UPDATE usuarios SET ? WHERE idUser = ?'
-        bd.query(sql, [user, idUser], (err, data) => {
-            console.log(err);
-            if (err)
-
-                return callback(null)
-            else
-                return callback(data)
-        })
-    },
 };

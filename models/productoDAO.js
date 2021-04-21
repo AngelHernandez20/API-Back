@@ -1,9 +1,10 @@
 const bd = require('../configMysql')
 
 module.exports = {
-    findByUsername : (username, callback) => {
-        let sql = 'SELECT * FROM usuarios WHERE username=?'
-        bd.query(sql,username, (err, data) => {
+
+    findByProductoname : (nombre, callback) => {
+        let sql = 'SELECT * FROM productos WHERE nombre=?'
+        bd.query(sql,nombre, (err, data) => {
             if (err) throw err
 
             if (data.length>0)
@@ -15,9 +16,9 @@ module.exports = {
     getAllUsers : (callback) => {
 
     },
-    insertUser : (user, okCallback, failCallback) => {
-        let sql = 'INSERT INTO usuarios SET ?'
-        bd.query(sql, user, (err, data) => {
+    insertProducto : (producto, okCallback, failCallback) => {
+        let sql = 'INSERT INTO productos SET ?'
+        bd.query(sql, producto, (err, data) => {
             if (err)
                 return failCallback(err)
             else
@@ -25,8 +26,8 @@ module.exports = {
         })
     },
 
-    getAllUser: (callback) => {
-        let sql = 'SELECT * FROM usuarios'
+    getAllProducto: (callback) => {
+        let sql = 'SELECT * FROM productos'
         bd.query(sql,(err, data) => {
             if (err) throw err
 
@@ -37,9 +38,9 @@ module.exports = {
         })
     },
 
-    deleteUsuario: (idUser, callback) => {
-        let sql = 'DELETE FROM usuarios WHERE idUser = ?'
-        bd.query(sql,idUser, (err, data) => {
+    deleteProducto: (idproductos, callback) => {
+        let sql = 'DELETE FROM productos WHERE idproductos = ?'
+        bd.query(sql,idproductos, (err, data) => {
             console.log("err =>",err)
             console.log("data =>",data)
             try {
@@ -50,17 +51,5 @@ module.exports = {
                 return callback(null)
             }
         })
-    },
-
-    updateUsuario : (user, idUser, callback) => {
-        let sql = 'UPDATE usuarios SET ? WHERE idUser = ?'
-        bd.query(sql, [user, idUser], (err, data) => {
-            console.log(err);
-            if (err)
-
-                return callback(null)
-            else
-                return callback(data)
-        })
-    },
+    }
 };

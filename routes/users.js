@@ -26,6 +26,9 @@ router.use('/', (req, res, next) => {
 router.get('/usernameValidate/:username',usersService.usernameValidate);
 router.post('/signup',usersService.signup)  //Servicio exclusivo para usuarios validados
 router.post('/login',usersService.login)
+router.get('/getAllUsuario',usersService.getAllUsuario);
+router.delete('/deleteUsuario/:idUser', usersService.deleteUsuario);
+router.put('/updateUsuario/:idUser', usersService.updateUsuario)
 
 module.exports = router;
 
